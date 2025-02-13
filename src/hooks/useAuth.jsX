@@ -7,7 +7,6 @@ const useAuth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter;
-
   useEffect(() => {
     const authData = localStorage.getItem("authData");
     if (authData) {
@@ -20,23 +19,23 @@ const useAuth = () => {
   const login = async ({ email, password }) => {
     setLoading(true);
     try {
-      const res = await axios.post(`${process.env.NEXT_URL_API}/login`, {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
         email: email,
         password: password,
       });
-      localStorage.setItem("authData", JSON.stringify(res.data));
+      localStorage.setItem("authData", JSON.stringify(res?.data?.data));
       setIsAuthenticated(true);
       setLoading(false);
-      router.push("/");
+      window.location.href = "/";
     } catch (error) {
-      setError(err.message);
+      setError(error.message);
     }
   };
 
   const logout = () => {
-    setIsAuthenticated(false);
+    console.log("TEs");
     localStorage.removeItem("authData");
-    setLoading(false);
+    setIsAuthenticated(false);
   };
 
   return {
