@@ -11,7 +11,8 @@ const RequestListing = () => {
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("authData"));
     setUser(userData);
-    if (user?.users?.role == "admin") {
+    fetchApi();
+    if (userData?.users?.role === "admin") {
       fetchApi();
     } else {
       fetchApiDistributor();
