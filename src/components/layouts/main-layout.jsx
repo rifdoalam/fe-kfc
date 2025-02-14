@@ -1,6 +1,5 @@
 "use client";
 import useAuth from "@/hooks/useAuth";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import Navbar from "./navbar";
 import { Button } from "../ui/button";

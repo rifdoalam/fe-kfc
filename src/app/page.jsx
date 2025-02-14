@@ -8,18 +8,15 @@ import axios from "axios";
 import StockChart from "@/components/chart/stockl";
 
 export default function Home() {
-  const [openModal, setOpenModal] = useState(0);
-  const [obats, setObats] = useState([]);
-  const [selected, setSelected] = useState(null);
   const [user, setUser] = useState({});
   const [stock, setStock] = useState([]);
   const [expired, setExpired] = useState([]);
-  const { logout } = useAuth();
+
   const [lists, setLists] = useState([]);
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("authData"));
-    console.log(userData?.users);
+
     if (!userData) {
       window.location.href = "/login";
     }
@@ -113,18 +110,6 @@ export default function Home() {
                           {item?.status === "approved_admin" && <span className="text-green-400">Approved</span>}
                           {item?.status === "approved_distributor" && <span className="text-green-400">Dikirim</span>}
                           {item?.status === "rejected" && <span className="text-red-400">Rejected</span>}
-                        </td>
-                        <td className="px-6 py-4 flex gap-2">
-                          {item?.status === "pending" && (
-                            <Button type="button" onClick={() => handleAction(item?.id, "approved_admin")} variant="outline">
-                              Accept
-                            </Button>
-                          )}
-                          {item?.status === "pending" && (
-                            <Button type="button" onClick={() => handleAction(item?.id, "rejected")}>
-                              Rejected
-                            </Button>
-                          )}
                         </td>
                       </tr>
                     ))}
