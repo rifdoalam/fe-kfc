@@ -19,6 +19,7 @@ export default function Home() {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("authData"));
+    console.log(userData?.users);
     if (!userData) {
       window.location.href = "/login";
     }

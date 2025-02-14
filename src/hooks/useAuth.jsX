@@ -7,15 +7,15 @@ const useAuth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const router = useRouter;
-  useEffect(() => {
-    const authData = localStorage.getItem("authData");
-    if (authData) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
-    setLoading(false);
-  }, []);
+  // useEffect(() => {
+  //   const authData = localStorage.getItem("authData");
+  //   if (authData) {
+  //     setIsAuthenticated(true);
+  //   } else {
+  //     setIsAuthenticated(false);
+  //   }
+  //   setLoading(false);
+  // }, []);
   const login = async ({ email, password }) => {
     setLoading(true);
     try {
@@ -26,7 +26,10 @@ const useAuth = () => {
       localStorage.setItem("authData", JSON.stringify(res?.data?.data));
       setIsAuthenticated(true);
       setLoading(false);
-      window.location.href = "/";
+      return res.data?.data;
+      // if (res?.data?.data?.users?.role === "external") {
+
+      // }
     } catch (error) {
       setError(error.message);
     }

@@ -30,7 +30,7 @@ const MainLayout = ({ children }) => {
   return (
     <div className="w-screen h-screen bg-white">
       {" "}
-      <div className="w-full h-full grid grid-cols-12 ">
+      <div className="w-full h-full grid grid-cols-12 py-14 md:py-0 ">
         <Navbar />
         <MobileNavbar />
         <div className="w-full h-full p-10 col-span-12 md:col-span-10">
@@ -38,6 +38,7 @@ const MainLayout = ({ children }) => {
           <div className="header w-full flex justify-between">
             {pathname === "/" && <h6 className="font-semibold text-[28px] text-center text-black">Dashboard</h6>}
             {pathname === "/request-listing" && <h6 className="font-semibold text-[28px] text-center text-black">Request List</h6>}
+            {pathname === "/request-obat" && <h6 className="font-semibold text-[28px] text-center text-black">Request Obat</h6>}
             {pathname === "/obat" && <h6 className="font-semibold text-[28px] text-center text-black">Obat</h6>}
 
             <div>

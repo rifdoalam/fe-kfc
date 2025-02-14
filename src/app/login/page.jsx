@@ -12,7 +12,6 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await login(credentials);
-    window.location.href = "/";
   };
   return (
     <div className="w-screen h-screen overflow-x-hidden ">
@@ -28,7 +27,7 @@ const LoginPage = () => {
                 type="email"
                 id="email"
                 placeholder="input email...."
-                className="border p-2  text-black rounded-lg bg-transparent"
+                className="border p-2  text-white rounded-lg bg-transparent"
               />
             </div>
             <div className="w-full flex flex-col gap-2">
@@ -40,7 +39,7 @@ const LoginPage = () => {
                 type="password"
                 id="email"
                 placeholder="input password...."
-                className="border p-2 rounded-lg text-black bg-transparent"
+                className="border p-2 rounded-lg text-white bg-transparent"
               />
             </div>
             <div className="w-full flex flex-col gap-2">
