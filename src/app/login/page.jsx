@@ -4,31 +4,35 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
+  const { toast } = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         ...credentials,
       });
       localStorage.setItem("authData", JSON.stringify(res?.data?.data));
-      if (res?.data?.data?.users?.role !== "external") {
-        window.location.href = "/";
-      } else {
-        window.location.href = "/request-obat";
-      }
+      window.location.href = "/";
     } catch (error) {
-      console.log(error);
+      if (error?.response?.data?.error === "Invalid password") {
+        toast({
+          title: "Login gagal, email atau password salah",
+          description: `${new Date().toString()}`,
+        });
+      }
     }
   };
 
   return (
     <div className="w-screen h-screen overflow-x-hidden ">
+      <Toaster />
       <div className="w-full h-full flex justify-center bg-gradient items-center px-10">
         <div className=" w-full lg:w-4/12 bg-transparent p-10 shadow-lg border rounded-lg ">
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
@@ -78,12 +82,12 @@ const ModalRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/register`, { ...data });
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, { ...data });
       toast({
         title: "Data berhasil ditambahkan",
         description: `${new Date().toString()}`,
       });
-      setData({ name: "", password: "", email: "", role: "external" });
+      setData({ name: "", password: "", email: "", phone: "" });
     } catch (error) {
       toast({
         title: `${error?.response?.data?.message}`,
@@ -110,6 +114,7 @@ const ModalRegister = () => {
               onChange={(e) => setData({ ...data, name: e.target.value })}
               type="text"
               placeholder="input nama anda...."
+              value={data.name}
               className="border p-2  text-black rounded-lg bg-transparent"
             />
           </div>
@@ -120,6 +125,7 @@ const ModalRegister = () => {
             <input
               onChange={(e) => setData({ ...data, email: e.target.value })}
               type="email"
+              value={data.email}
               placeholder="input email anda...."
               className="border p-2  text-black rounded-lg bg-transparent"
             />
@@ -131,8 +137,21 @@ const ModalRegister = () => {
             <input
               onChange={(e) => setData({ ...data, password: e.target.value })}
               type="password"
+              value={data.password}
               placeholder="input password anda...."
               className="border p-2  text-black rounded-lg bg-transparent"
+            />
+          </div>
+          <div className="w-full flex flex-col gap-1">
+            <label htmlFor="phone" className="text-[14px] font-semibold text-black ">
+              Phone
+            </label>
+            <input
+              onChange={(e) => setData({ ...data, phone: e.target.value })}
+              type="phone"
+              placeholder="input phone..."
+              value={data.phone}
+              className="border p-2 rounded-lg text-black bg-transparent"
             />
           </div>
           <div className="mt-4 w-full">
